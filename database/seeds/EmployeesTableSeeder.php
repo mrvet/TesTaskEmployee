@@ -13,20 +13,30 @@ class EmployeesTableSeeder extends Seeder
     public function run()
     {
 
-        factory(Employee::class, 50)->create()->each(function ($u , $index) {
+        factory(Employee::class, 5)->create()->each(function ($u) {
 
-            $employee = Employee::first();
+            //$employee = Employee::first();
+            $u->boss = null;
+            $u->save();
 
-            if($index === 0){
-                $u->boss = $employee->id;
-            }//if
-            else{
-                $u->boss = null;
-            }//else
+        });
+
+        $employees = Employee::all()
+            ->where('boss','=' , null);
+
+        $count = $employees->count();
+
+        factory(Employee::class, 1000)->create()->each(function ($u) use ($employees , $count) {
+
+            $randPositionNumber = rand(0,$count-1);
+
+            $u->boss = $employees[$randPositionNumber]->id;
 
             $u->save();
 
-        });;
+        });
 
     }
+
+
 }
