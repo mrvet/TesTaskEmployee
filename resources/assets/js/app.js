@@ -18,3 +18,8 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: 'body'
 });
+
+require('../../../node_modules/jquery/dist/jquery.js');
+require('../../../node_modules/bootstrap-treeview/dist/bootstrap-treeview.min');
+require('./tree.jquery.js');
+

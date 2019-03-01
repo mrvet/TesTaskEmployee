@@ -15,28 +15,33 @@ class EmployeesTableSeeder extends Seeder
 
         factory(Employee::class, 5)->create()->each(function ($u) {
 
-            //$employee = Employee::first();
             $u->boss = null;
+            $u->position = 2;
             $u->save();
 
         });
 
-        $employees = Employee::all()
-            ->where('boss','=' , null);
+        $employees = factory(Employee::class, 5000)->create();
 
-        $count = $employees->count();
+        $employees->each(function ($u) use ($employees) {
 
-        factory(Employee::class, 1000)->create()->each(function ($u) use ($employees , $count) {
+            $employee = Employee::inRandomOrder()->limit(1)->get()->toArray();
 
-            $randPositionNumber = rand(0,$count-1);
+            var_dump($employee[0]);
 
-            $u->boss = $employees[$randPositionNumber]->id;
+            $employee = $employee[0];
 
-            $u->save();
+            if( $employee['boss'] !=  $u->id ){
 
+                $u->boss = $employee['id'];
+                $u->save();
+
+            }//if
+//
+//
         });
 
-    }
+    }//run
 
 
 }

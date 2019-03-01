@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Database\Schema;
-//use App\Models\Employee;
-
-use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,21 +13,13 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', function () {
+//Route::get('/', function () {
+//
+//    return view('index',[
+//        'bossArray' => $mainEmploees
+//    ]);
+//
+//});
 
-    //$mainEmploees = Employee::where('boss' , '=' , null)->get();
-    $mainEmploees = DB::table('employees')
-                    ->where('boss' , '=' , null)
-                    ->get()->toArray();
-
-    echo '<pre>';
-
-    var_dump($mainEmploees);
-
-    echo '</pre>';
-
-    return view('index',[
-        'bossArray' => $mainEmploees
-    ]);
-
-});
+Route::get('/', 'EmployeeController@GetBossEmployees');
+Route::get('/get-employees', 'EmployeeController@GetBossEmployeesAjax');

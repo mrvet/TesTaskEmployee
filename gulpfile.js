@@ -13,7 +13,20 @@ require('laravel-elixir-vue');
  |
  */
 
+/*
+*
+*
+* require('../../../node_modules/jquery/dist/jquery.js');
+    require('./tree.jquery.js');
+    require('./main.js');
+
+//require('../../../node_modules/bootstrap/dist/js/bootstrap.js');
+.webpack('app.js');
+* */
+
 elixir(mix => {
+
     mix.sass('app.scss')
-       .webpack('app.js');
+        .webpack('app.js');
+
 });

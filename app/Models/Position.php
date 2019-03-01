@@ -21,6 +21,4 @@ class Position extends Model{
      */
     public $timestamps = false;
 
-
-
 }

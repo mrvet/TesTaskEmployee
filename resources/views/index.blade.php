@@ -6,23 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="js/app.js" ></script>
+    <script src="js/main.js"></script>
 
 </head>
 <body>
 
     <div class="container">
-        {{--<h2>{{count($bossArray)}}</h2>--}}
-        @foreach ($bossArray as $boss)
-            <p>
-                {{ $boss->FirstName }}
-                {{ $boss->SecondName }}
-                {{ $boss->LastName }}
-                ( {{ $boss->position->PositionTitle }} )
-            </p>
-        @endforeach
+
+        <div id="employeesTree">
+
+        </div>
 
     </div>
 

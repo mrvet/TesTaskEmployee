@@ -9,7 +9,13 @@ class Employee extends Model{
     protected $table = 'employees';
 
     public function position(  ){
-        return $this->hasOne('App\Models\Position');
-    }//
+
+        return $this->belongsTo(
+            'App\Models\Position',
+            'position',
+            'id'
+        );
+
+    }//position
 
 }
