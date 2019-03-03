@@ -27,6 +27,23 @@ require('laravel-elixir-vue');
 elixir(mix => {
 
     mix.sass('app.scss')
+        .copy('node_modules/bootstrap-treeview/dist/bootstrap-treeview.min.js', 'resources/assets/js')
+        .copy('node_modules/jquery/dist/jquery.js', 'resources/assets/js')
+        .copy('node_modules/bootstrap-treeview/dist/bootstrap-treeview.min.css', 'resources/assets/css')
+        .copy('node_modules/bootstrap/dist/css/bootstrap.css', 'resources/assets/css')
+        .copy('node_modules/bootstrap-sass/assets/fonts', 'public/fonts')
+
+        .styles([
+            'bootstrap.css',
+            'bootstrap-treeview.min.css'
+        ])
+        .scripts([
+            'main.js',
+            'jquery.js',
+            'bootstrap-treeview.min.js'
+        ], 'public/js/myScripts.js')
+
+
         .webpack('app.js');
 
 });

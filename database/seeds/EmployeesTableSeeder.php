@@ -13,23 +13,34 @@ class EmployeesTableSeeder extends Seeder
     public function run()
     {
 
+        DB::connection()->disableQueryLog();
+
         factory(Employee::class, 5)->create()->each(function ($u) {
 
             $u->boss = null;
-            $u->position = 2;
+            $u->position = 1;
             $u->save();
 
         });
 
-        $employees = factory(Employee::class, 5000)->create();
+        $employees = factory(Employee::class, 100)->create();
 
         $employees->each(function ($u) use ($employees) {
 
+
             $employee = Employee::inRandomOrder()->limit(1)->get()->toArray();
 
-            var_dump($employee[0]);
-
             $employee = $employee[0];
+            while($employee['position'] !=  $u->position-1){
+
+
+                $employee = Employee::inRandomOrder()->limit(1)->get()->toArray();
+
+                $employee = $employee[0];
+            }
+//            var_dump($employee[0]);
+
+
 
             if( $employee['boss'] !=  $u->id ){
 
@@ -40,6 +51,7 @@ class EmployeesTableSeeder extends Seeder
 //
 //
         });
+
 
     }//run
 

@@ -7,16 +7,24 @@
 
     <title>Laravel</title>
     <script src="js/app.js" ></script>
-    <script src="js/main.js"></script>
+
+
+    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="js/myScripts.js"></script>
 {{--https://github.com/jonmiles/bootstrap-treeview--}}
 </head>
 <body>
 
     <div class="container">
 
-        <div id="employeesTree">
+        <div class="row">
+            <div id="employeesTree">
 
+            </div>
         </div>
+
 
     </div>
 

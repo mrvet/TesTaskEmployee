@@ -43,5 +43,21 @@ class EmployeeController extends Controller{
         return $mainEmployees;
 
     }
-    
+
+
+    public function GetEmployeesByBossAjax( Request $request ){
+//
+        $limit = $request->limit;
+        $offset = $request->offset;
+        $id = $request->id;
+
+        $mainEmployees = Employee::where('boss' , '=' , $id)
+            ->with(['position'])
+            ->get()
+            ->toJson();
+
+        return $mainEmployees;
+
+    }
+
 }
