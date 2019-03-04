@@ -49,9 +49,9 @@ class EmployeeController extends Controller{
 //
         $limit = $request->limit;
         $offset = $request->offset;
-        $id = $request->id;
+        $id = $request->get('id');
 
-        $mainEmployees = Employee::where('boss' , '=' , $id)
+        $mainEmployees = Employee::where('boss' , $id)
             ->with(['position'])
             ->get()
             ->toJson();
