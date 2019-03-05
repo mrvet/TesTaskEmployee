@@ -22,5 +22,12 @@ use Illuminate\Database\Schema;
 //});
 
 Route::get('/', 'EmployeeController@GetBossEmployees');
+
 Route::get('/get-employees', 'EmployeeController@GetBossEmployeesAjax');
 Route::get('/get-employeesByBoss', 'EmployeeController@GetEmployeesByBossAjax');
+
+Route::get('/employees-list', 'EmployeeController@GetEmployeesList');
+Route::get('/get-more-employees', 'EmployeeController@GetEmployeesListAjax');
+
+Route::get('/employee/{id}', 'EmployeeController@GetEmployee');
+

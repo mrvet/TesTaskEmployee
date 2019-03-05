@@ -1,82 +1,37 @@
 ;"use strict";
 
-// $(document).ready( async _ => {
-//
-//
-//     console.log('READY!');
-//
-//     let response = await fetch( '/get-employees' );
-//     let employees = await response.json();
-//
-//
-//     let data = [];
-//
-//     employees.forEach( employee => {
-//
-//         data.push({
-//             text: `${employee.FirstName} ${employee.SecondName} ${employee.LastName} (${employee.position.PositionTitle})`,
-//             href: employee.id,
-//
-//             nodes:[
-//
-//             ]
-//         });
-//
-//     } );
-//
-//     $('#employeesTree').treeview({
-//         data: data,
-//
-//     });
-//
-//     $('#employeesTree').treeview('collapseAll', { silent: true });
-//
-//
-//     $('#employeesTree').on('nodeExpanded ', async function(event, data) {
-//
-//         console.log('data' , data);
-//
-//         let response = await $.ajax({
-//             url: `/get-employeesByBoss`,
-//             method: 'GET',
-//             data:{
-//                 offset:10,
-//                 limit:1,
-//                 id: data.href
-//             }
-//         });
-//
-//         console.log('response' , response);
-//
-//         let employees = JSON.parse(response);
-//
-//         let childrenNodes = [];
-//
-//         employees.forEach( employee => {
-//
-//             childrenNodes.push({
-//                 text: `${employee.FirstName} ${employee.SecondName} ${employee.LastName} (${employee.position.PositionTitle})`,
-//                 href: employee.id,
-//
-//             });
-//
-//         } );
-//
-//         //https://github.com/jonmiles/bootstrap-treeview/tree/develop
-//         /*
-//         * это ссылка на дерево, оно вроде такое же, нотам добавлены методы,  там есть метод добавления но он его не находит
-//         * */
-//         // $('#employeesTree').treeview('addNode',[childrenNodes , data ,false, { silent: true } ]);
-//         $('#employeesTree').treeview('addNodeAfter',[childrenNodes , data ,false, { silent: true } ]);
-//
-//
-//     });
-//
-//
-// } );
+function GetEmployeeRowTemplate( employee ){
 
+    return `
+        <tr>
+                    <th scope="row">
+                        <a target="_blank" href="/employee/${employee.id}">
+                            ${employee.id}
+                        </a>
+                    </th>
+                    <th scope="row">${employee.FirstName}</th>
+                    <th scope="row">${employee.SecondName}</th>
+                    <th scope="row">${employee.LastName}</th>
+                    <th scope="row">${employee.position.PositionTitle}</th>
+                    <th scope="row">
+                        <a target="_blank" href="/employee/${employee.boss.id}">
+                            ${employee.boss.FirstName}
+                            ${employee.boss.SecondName}
+                        </a>
+                    </th>
+                </tr>
+   
+    `;
+
+}
 
 $(document).ready( async _ => {
+
+    if( !$('#employeesTree')){
+
+        return;
+
+    }//if
 
     let response = await fetch( '/get-employees' );
     let employees = await response.json();
@@ -97,6 +52,17 @@ $(document).ready( async _ => {
         });
 
     } );
+
+
+    $('#employeesTree').on(
+        'tree.click',
+        function(event) {
+
+            //window.location = `/employee/${event.node.id}`;
+            window.open(`/employee/${event.node.id}`);
+
+        }
+    );
 
     $('#employeesTree').tree({
         data: data,
@@ -139,6 +105,88 @@ $(document).ready( async _ => {
 
         }
     );
+
+    //GetMoreEmployees
+
+    let limit = 10;
+    let offset = 10;
+    let employeesTable = $('#employeesTable');
+
+    $('#GetMoreEmployees').click( async _ => {
+
+        try{
+
+            let request = await $.ajax({
+
+                url: '/get-more-employees',
+                method: 'GET',
+                data: {
+                    offset: offset,
+                    limit: limit,
+                }
+            });
+
+            let employees = JSON.parse( request );
+
+            offset += +employees.length;
+
+
+            employees.forEach( employee => {
+                employeesTable.append( GetEmployeeRowTemplate( employee ) );
+            });
+
+        }//try
+        catch( ex ){
+
+            console.log('EXCEPTION:' , ex);
+
+        }//catch
+
+    } );
+
+    $('#orderByID').click( async _ => {
+
+        try{
+
+            let orderType = $(this).data('order-type');
+
+            orderType = orderType === 'asc' ? 'desc' : 'asc';
+
+            let request = await $.ajax({
+
+                url: '/get-more-employees',
+                method: 'GET',
+                data: {
+                    offset: offset,
+                    limit: limit,
+                    order: orderType,
+                    column: 'id'
+                }
+            });
+
+            employeesTable.children().remove();
+
+            let employees = JSON.parse( request );
+
+            offset += +employees.length;
+
+
+            employees.forEach( employee => {
+                employeesTable.append( GetEmployeeRowTemplate( employee ) );
+            });
+
+            $(this).data('order-type' , orderType);
+            $(this).text(`# (${orderType})`);
+
+        }//try
+        catch( ex ){
+
+            console.log('EXCEPTION:' , ex);
+
+        }//catch
+
+    } );
+
 
 
 } );
