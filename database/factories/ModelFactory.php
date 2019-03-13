@@ -20,7 +20,7 @@ $factory->define(Employee::class, function (Generator $faker) {
 
     $fullname = $faker->name;
 
-    $randPositionNumber = rand(0,4);
+    $randPositionNumber = rand(1,4);
 
     $positions = Position::all(  );
 

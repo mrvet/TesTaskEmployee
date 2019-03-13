@@ -18,4 +18,15 @@ class Employee extends Model{
 
     }//position
 
+
+    public function boss(  ){
+
+        return $this->belongsTo(
+            'App\Models\Employee',
+            'boss',
+            'id'
+        );
+
+    }//position
+
 }

@@ -13,13 +13,13 @@ require('./bootstrap');
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
+//
+// const app = new Vue({
+//     el: 'body'
+// });
 
-const app = new Vue({
-    el: 'body'
-});
-
-require('../../../node_modules/jquery/dist/jquery.js');
-require('../../../node_modules/bootstrap-treeview/dist/bootstrap-treeview.min');
-require('./tree.jquery.js');
+// require('../../../node_modules/jquery/dist/jquery.js');
+// require('../../../node_modules/bootstrap-treeview/dist/bootstrap-treeview.min.js');
+// require('./tree.jquery.js');
 

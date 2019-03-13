@@ -20,6 +20,8 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "bootstrap-treeview": "^1.2.0",
+    "jqtree": "^1.4.9",
+    "laravel-mix": "^4.0.14",
     "popper": "^1.0.1"
   }
 }
