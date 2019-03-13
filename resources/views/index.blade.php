@@ -13,16 +13,19 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <script src="js/myScripts.js"></script>
-{{--https://github.com/jonmiles/bootstrap-treeview--}}
+
 </head>
 <body>
 
     <div class="container">
 
         <div class="row">
-            <div id="employeesTree">
-
+            <div class="col-8">
+                <a class="btn btn-primary" target="_blank" href="/employees-list">Employees list</a>
             </div>
+        </div>
+        <div class="row" id="employeesTree">
+
         </div>
 
 

@@ -40,7 +40,7 @@ elixir(mix => {
             //'bootstrap-treeview.min.css'
         ])
         .scripts([
-            'main.js',
+            //'main.js',
             'jquery.js',
             // 'bootstrap-treeview.min.js'
             'tree.jquery.js'

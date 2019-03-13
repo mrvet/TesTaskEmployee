@@ -2,6 +2,16 @@
 
 function GetEmployeeRowTemplate( employee ){
 
+    employee.LastName = employee.LastName || null;
+
+    if( !employee.boss ){
+        employee.boss = {
+            id: 0,
+            FirstName: '',
+            SecondName: ''
+        };
+    }//if
+
     return `
         <tr>
                     <th scope="row">
@@ -14,7 +24,7 @@ function GetEmployeeRowTemplate( employee ){
                     <th scope="row">${employee.LastName}</th>
                     <th scope="row">${employee.position.PositionTitle}</th>
                     <th scope="row">
-                        <a target="_blank" href="/employee/${employee.boss.id}">
+                        <a target="_blank" href="/employee/${employee.boss.id !== 0 ? employee.boss.id : '#'}">
                             ${employee.boss.FirstName}
                             ${employee.boss.SecondName}
                         </a>
@@ -144,17 +154,21 @@ $(document).ready( async _ => {
 
     } );
 
-    $('#orderByID').click( async _ => {
+
+
+    $('body').on( 'click' , '.orderBy' , async function (){
+
         limit = 10;
-        offset = 10;
+        offset = 0;
 
         try{
 
             let orderType = $(this).data('order-type');
+            let column = $(this).data('column');
 
             orderType = orderType === 'asc' ? 'desc' : 'asc';
 
-            let request = await $.ajax({
+            let employees = await $.ajax({
 
                 url: '/get-more-employees',
                 method: 'GET',
@@ -162,23 +176,20 @@ $(document).ready( async _ => {
                     offset: offset,
                     limit: limit,
                     order: orderType,
-                    column: 'id'
+                    column: column
                 }
             });
 
             employeesTable.children().remove();
 
-            let employees = JSON.parse( request );
-
             offset += +employees.length;
-
 
             employees.forEach( employee => {
                 employeesTable.append( GetEmployeeRowTemplate( employee ) );
             });
 
             $(this).data('order-type' , orderType);
-            $(this).text(`# (${orderType})`);
+            $(this).text(`#${column} (${orderType})`);
 
         }//try
         catch( ex ){
@@ -188,7 +199,5 @@ $(document).ready( async _ => {
         }//catch
 
     } );
-
-
 
 } );

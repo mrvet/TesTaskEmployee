@@ -102,9 +102,8 @@ class EmployeeController extends Controller{
 
         if($order){
 
-
             $employees = Employee::
-            with(['position' , 'boss'])
+            with(['position', 'boss'])
                 ->skip($offset)
                 ->take($limit)
                 ->orderBy($column , $order)
@@ -124,7 +123,7 @@ class EmployeeController extends Controller{
         }//else
 
 
-        return $employees;
+        return response($employees)->header('Content-Type', 'application/json');
 
     }//GetEmployee
 }
